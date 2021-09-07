@@ -11,16 +11,62 @@ import csv
 path_to_file = "c:/Users/15103/OneDrive/Documents/2021/Courses/Data Analytics Course/Module 3/Election_Analysis/Resources"
 os.chdir(path_to_file)
 file_to_open = "election_results.csv"
+# initialize total vote counter
+total_votes = 0
+# Candidate options
+candidate_options=[]
+# Declare empty dictionary
+candidate_votes = {}
+# initialize winning cadidate and winning count tracker
+winning_candidate = ""
+winning_count = 0
+winning_percentage = 0
 # open the election results file and read it
 with open(file_to_open) as csvfile:
     csvreader = csv.reader(csvfile)
     header = next(csvreader)
     print(header)
-#    for row in csvreader:
+    for row in csvreader:
+        # Add to total vote count
+        total_votes += 1
+        # Print cadidate name from each row
+        candidate_name = row[2]
+        # Add candidate name to candidate list if its not there prior
+        if candidate_name not in candidate_options:
+            candidate_options.append(candidate_name)
+            # initialize candidate votes
+            candidate_votes[candidate_name]=0
+        # add candidate votes
+        candidate_votes[candidate_name] += 1
+
         
 
 # to do - perform analyses
+for candidate_name in candidate_votes:
+    # Retrieve vote count of candidate
+    votes = candidate_votes[candidate_name]
+    # calculate vote percentage
+    vote_percentage = float(votes)/float(total_votes) * 100
+    # Print candidate name and vote percentage
+    print(f"{candidate_name}: {vote_percentage: .1f}% ({votes:,})\n")
+    # Determine winning cadidate and votes
+    if (votes > winning_count) and (vote_percentage > winning_percentage):
+        winning_count = votes
+        winning_percentage = vote_percentage
+        winning_candidate = candidate_name
 
+#print(total_votes)
+#print(candidate_options)
+#print(candidate_votes)
+# Summary
+Winning_candidate_summary = (
+    f"--------------------------\n"
+    f"Winner: {winning_candidate}\n"
+    f"Winning vote count: {winning_count}\n"
+    f"Winning Percentage: {winning_percentage:.1f}%\n"
+    f"--------------------------\n")
+
+print(Winning_candidate_summary)
 # close file
 curr_dir = os.getcwd()
 print (f"Directory {curr_dir}")
