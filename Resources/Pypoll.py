@@ -11,6 +11,9 @@ import csv
 path_to_file = "c:/Users/15103/OneDrive/Documents/2021/Courses/Data Analytics Course/Module 3/Election_Analysis/Resources"
 os.chdir(path_to_file)
 file_to_open = "election_results.csv"
+# creating a file for results
+csvoutfile = "election_results.csv"
+
 # initialize total vote counter
 total_votes = 0
 # Candidate options
@@ -25,7 +28,7 @@ winning_percentage = 0
 with open(file_to_open) as csvfile:
     csvreader = csv.reader(csvfile)
     header = next(csvreader)
-    print(header)
+    #print(header)
     for row in csvreader:
         # Add to total vote count
         total_votes += 1
@@ -39,7 +42,17 @@ with open(file_to_open) as csvfile:
         # add candidate votes
         candidate_votes[candidate_name] += 1
 
-        
+# Creating election header and writing output file
+with open(csvoutfile, 'w') as txt_file:
+    election_header = (
+        f"--------------------------\n"
+        f"Election Results\n"
+        f"--------------------------\n"
+        f"Total votes: {total_votes:,}\n"
+        f"--------------------------\n")
+    print(election_header, end="")
+    txt_file.write(election_header)
+
 
 # to do - perform analyses
 for candidate_name in candidate_votes:
@@ -48,14 +61,16 @@ for candidate_name in candidate_votes:
     # calculate vote percentage
     vote_percentage = float(votes)/float(total_votes) * 100
     # Print candidate name and vote percentage
-    print(f"{candidate_name}: {vote_percentage: .1f}% ({votes:,})\n")
+    candidate_results = (f"{candidate_name}: {vote_percentage: .1f}% ({votes:,})\n")
+    print(candidate_results)
+    txt_file.write(candidate_results)
     # Determine winning cadidate and votes
     if (votes > winning_count) and (vote_percentage > winning_percentage):
         winning_count = votes
         winning_percentage = vote_percentage
         winning_candidate = candidate_name
 
-#print(total_votes)
+
 #print(candidate_options)
 #print(candidate_votes)
 # Summary
@@ -67,7 +82,9 @@ Winning_candidate_summary = (
     f"--------------------------\n")
 
 print(Winning_candidate_summary)
+txt_file.write(Winning_candidate_summary)
 # close file
-curr_dir = os.getcwd()
-print (f"Directory {curr_dir}")
+#curr_dir = os.getcwd()
+#print (f"Directory {curr_dir}")
 csvfile.close()
+txt_file.close()
