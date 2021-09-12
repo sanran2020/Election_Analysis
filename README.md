@@ -5,7 +5,7 @@
 #### The purpose of this project is to audit Colorado election results using Python. If the audit using Python is successful, this method will be used for other election audits too.
 
 ## Election audit results
-#### There are 4 aspects of the election that needs to be summarized for this audit: a) Total votes b) County votes c) Candidate votes and d) Winning candidate. Below is the summary:
+#### There are 4 aspects of the election that needs to be summarized for this audit: 1) Total votes 2) County votes 3) Candidate votes and 4) Winning candidate. Below is the summary:
 
 
 1. Total Votes =  369,711
