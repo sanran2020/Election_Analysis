@@ -25,8 +25,10 @@ candidate_votes = {}
 county_votes = {}
 # initialize winning cadidate and winning count tracker
 winning_candidate = ""
-winning_count = 0
-winning_percentage = 0
+winning_count_candidate = 0
+winning_percentage_candidate = 0
+winning_count_county = 0
+winning_percentage_county = 0
 # open the election results file and read it
 with open(file_to_open) as csvfile:
     csvreader = csv.reader(csvfile)
@@ -61,6 +63,9 @@ with open(csvoutfile, 'w') as txt_file:
         f"Election Results\n"
         f"--------------------------\n"
         f"Total votes: {total_votes:,}\n"
+        f"--------------------------\n\n"
+        f"--------------------------\n"
+        f"County Results\n"
         f"--------------------------\n")
     print(election_header, end="")
     txt_file.write(election_header)
@@ -80,14 +85,17 @@ for county_name in county_votes:
     with open(csvoutfile,'a') as txt_file:
         txt_file.write(county_results)
 #Determine winning cadidate and votes
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        winning_count = votes
-        winning_percentage = vote_percentage
+    if (votes > winning_count_county) and (vote_percentage > winning_percentage_county):
+        winning_count_county = votes
+        winning_percentage_county = vote_percentage
         winning_county = county_name
 # County Summary
 Winning_county_summary = (
     f"--------------------------\n"
     f"Largest county turnover: {winning_county}\n"
+    f"--------------------------\n\n"
+    f"--------------------------\n"
+    f"Candidate results\n"
     f"--------------------------\n")
 
 print(Winning_county_summary)
@@ -109,10 +117,11 @@ for candidate_name in candidate_votes:
     with open(csvoutfile,'a') as txt_file:
         txt_file.write(candidate_results)
     #Determine winning cadidate and votes
-    if (votes > winning_count) and (vote_percentage > winning_percentage):
-        winning_count = votes
-        winning_percentage = vote_percentage
+    if (votes > winning_count_candidate) and (vote_percentage > winning_percentage_candidate):
+        winning_count_candidate = votes
+        winning_percentage_candidate = vote_percentage
         winning_candidate = candidate_name
+        
 
 
 #print(candidate_options)
@@ -121,8 +130,8 @@ for candidate_name in candidate_votes:
 Winning_candidate_summary = (
     f"--------------------------\n"
     f"Winner: {winning_candidate}\n"
-    f"Winning vote count: {winning_count}\n"
-    f"Winning Percentage: {winning_percentage:.1f}%\n"
+    f"Winning vote count: {winning_count_candidate:,}\n"
+    f"Winning Percentage: {winning_percentage_candidate:.1f}%\n"
     f"--------------------------\n")
 
 print(Winning_candidate_summary)
